@@ -1,0 +1,1879 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eukurd Digital — Kurdistan & Dünya Haberleri</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+/* ═══════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════ */
+:root {
+  --red:      #c0392b;
+  --red-dk:   #9b2d22;
+  --gold:     #d4a017;
+  --navy:     #0d1b2a;
+  --navy-md:  #1a2f42;
+  --slate:    #2c4a5e;
+  --fog:      #f5f5f2;
+  --white:    #ffffff;
+  --border:   #dde3e8;
+  --muted:    #6b7f8d;
+  --ink:      #1a1a1a;
+  --tag-bg:   #fef3cd;
+  --tag-txt:  #7a4f00;
+  --ff-head:  'Playfair Display', Georgia, serif;
+  --ff-body:  'Source Sans 3', system-ui, sans-serif;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body { background:var(--fog); color:var(--ink); font-family:var(--ff-body); font-size:16px; line-height:1.6; }
+a { color:inherit; text-decoration:none; }
+img { display:block; width:100%; object-fit:cover; }
+button { font-family:var(--ff-body); cursor:pointer; }
+
+/* ═══════════════════════════════════════════
+   BREAKING NEWS TICKER
+═══════════════════════════════════════════ */
+.ticker-wrap {
+  background: var(--red);
+  color: #fff;
+  overflow: hidden;
+  height: 34px;
+  display: flex;
+  align-items: center;
+}
+.ticker-label {
+  background: var(--navy);
+  padding: 0 18px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  gap: 6px;
+}
+.ticker-label i { color: var(--gold); animation: blink 1.2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+.ticker-inner {
+  display: flex;
+  animation: ticker 38s linear infinite;
+  white-space: nowrap;
+  align-items: center;
+  height: 100%;
+}
+.ticker-inner:hover { animation-play-state: paused; }
+@keyframes ticker {
+  0%   { transform: translateX(100vw); }
+  100% { transform: translateX(-100%); }
+}
+.ticker-inner span { margin-right: 80px; font-size: .8rem; font-weight: 500; }
+.ticker-inner span::before { content: '◆  '; color: var(--gold); }
+
+/* ═══════════════════════════════════════════
+   TOP BAR (date / social / lang)
+═══════════════════════════════════════════ */
+.topbar {
+  background: var(--navy);
+  color: rgba(255,255,255,.65);
+  font-size: .72rem;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 36px;
+}
+.topbar-left { display:flex; align-items:center; gap:18px; }
+.topbar-left i { color: var(--gold); margin-right:4px; }
+.topbar-socials { display:flex; gap:14px; }
+.topbar-socials a {
+  color: rgba(255,255,255,.55);
+  font-size: .85rem;
+  transition: color .18s;
+}
+.topbar-socials a:hover { color: var(--gold); }
+.lang-switcher {
+  display:flex; gap:8px;
+}
+.lang-btn {
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15);
+  color: rgba(255,255,255,.6);
+  font-size: .68rem;
+  padding: 2px 9px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: 600;
+  letter-spacing: .5px;
+  transition: all .18s;
+}
+.lang-btn.active, .lang-btn:hover { background: var(--red); border-color: var(--red); color:#fff; }
+
+/* ═══════════════════════════════════════════
+   HEADER / LOGO
+═══════════════════════════════════════════ */
+.site-header {
+  background: var(--white);
+  border-bottom: 3px solid var(--red);
+  padding: 1.1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+.logo-block { display:flex; align-items:center; gap:14px; }
+.logo-icon {
+  width: 52px; height: 52px;
+  background: var(--red);
+  border-radius: 6px;
+  display: flex; align-items:center; justify-content:center;
+  font-size: 1.5rem;
+  color: #fff;
+  font-family: var(--ff-head);
+  font-weight: 900;
+  flex-shrink: 0;
+  letter-spacing: -2px;
+}
+.logo-text h1 {
+  font-family: var(--ff-head);
+  font-size: 1.7rem;
+  font-weight: 900;
+  color: var(--navy);
+  letter-spacing: -1px;
+  line-height: 1;
+}
+.logo-text h1 span { color: var(--red); }
+.logo-text p {
+  font-size: .68rem;
+  color: var(--muted);
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.header-search {
+  display: flex;
+  align-items: center;
+  background: var(--fog);
+  border: 1.5px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  max-width: 320px;
+  flex: 1;
+}
+.header-search input {
+  border: none;
+  background: transparent;
+  padding: .55rem 1rem;
+  font-size: .85rem;
+  flex: 1;
+  outline: none;
+  font-family: var(--ff-body);
+  color: var(--ink);
+}
+.header-search button {
+  background: var(--red);
+  border: none;
+  color: #fff;
+  padding: .55rem 1rem;
+  font-size: .9rem;
+  transition: background .18s;
+}
+.header-search button:hover { background: var(--red-dk); }
+.header-weather {
+  font-size: .78rem;
+  color: var(--muted);
+  text-align:right;
+  flex-shrink:0;
+}
+.header-weather strong { display:block; font-size:1.4rem; color:var(--navy); font-weight:700; }
+
+/* ═══════════════════════════════════════════
+   MAIN NAV
+═══════════════════════════════════════════ */
+.main-nav {
+  background: var(--navy-md);
+  position: sticky; top:0; z-index: 200;
+  box-shadow: 0 2px 12px rgba(0,0,0,.25);
+}
+.nav-inner {
+  max-width: 1380px;
+  margin: 0 auto;
+  display: flex;
+  align-items: stretch;
+}
+.nav-link {
+  color: rgba(255,255,255,.8);
+  font-size: .8rem;
+  font-weight: 600;
+  padding: 0 1.1rem;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: .3px;
+  text-transform: uppercase;
+  border-bottom: 3px solid transparent;
+  transition: all .18s;
+  position: relative;
+}
+.nav-link:hover, .nav-link.active {
+  color: #fff;
+  border-bottom-color: var(--gold);
+  background: rgba(255,255,255,.06);
+}
+.nav-link i { font-size: .75rem; }
+.nav-link .badge {
+  background: var(--red);
+  color: #fff;
+  font-size: .55rem;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-weight: 700;
+  letter-spacing:.5px;
+}
+.nav-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  padding-right: 1rem;
+  gap: 10px;
+}
+.nav-live-btn {
+  background: var(--red);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 14px;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: background .18s;
+}
+.nav-live-btn:hover { background: var(--red-dk); }
+.nav-live-btn .live-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #fff;
+  animation: blink 1s infinite;
+}
+/* dropdown */
+.nav-item { position:relative; }
+.nav-dropdown {
+  position:absolute; top:100%; left:0;
+  background: var(--white);
+  border-top: 3px solid var(--red);
+  min-width: 200px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.15);
+  display: none;
+  z-index:300;
+}
+.nav-item:hover .nav-dropdown { display:block; }
+.nav-dropdown a {
+  display:block;
+  padding: .6rem 1.1rem;
+  font-size: .8rem;
+  color: var(--ink);
+  border-bottom: 1px solid var(--border);
+  transition: background .12s, color .12s;
+}
+.nav-dropdown a:last-child { border-bottom: none; }
+.nav-dropdown a:hover { background: var(--fog); color: var(--red); }
+
+/* hamburger */
+.hamburger {
+  display:none;
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:1.3rem;
+  padding: .5rem 1rem;
+  cursor:pointer;
+}
+
+/* ═══════════════════════════════════════════
+   PAGE LAYOUT
+═══════════════════════════════════════════ */
+.container {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+.page-body {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 2rem;
+  padding: 1.8rem 0 3rem;
+}
+@media(max-width:1080px){
+  .page-body{ grid-template-columns:1fr; }
+}
+
+/* ═══════════════════════════════════════════
+   SECTION LABEL
+═══════════════════════════════════════════ */
+.section-label {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:1.2rem;
+  padding-bottom:.6rem;
+  border-bottom: 2px solid var(--border);
+}
+.section-label h2 {
+  font-family: var(--ff-head);
+  font-size:1.1rem;
+  font-weight:700;
+  color: var(--navy);
+  letter-spacing:-.3px;
+}
+.section-label .bar {
+  width:4px; height:22px;
+  background:var(--red);
+  border-radius:2px;
+  flex-shrink:0;
+}
+.section-label a.see-all {
+  margin-left:auto;
+  font-size:.72rem;
+  font-weight:700;
+  color: var(--red);
+  letter-spacing:.5px;
+  text-transform:uppercase;
+  display:flex; align-items:center; gap:4px;
+  transition: gap .15s;
+}
+.section-label a.see-all:hover { gap:8px; }
+
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+.hero-grid {
+  display:grid;
+  grid-template-columns: 1.6fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1.2rem;
+  margin-bottom:2.5rem;
+}
+@media(max-width:720px){ .hero-grid{grid-template-columns:1fr;} }
+
+.hero-main {
+  grid-row: span 2;
+  position: relative;
+  border-radius:4px;
+  overflow:hidden;
+  cursor:pointer;
+}
+.hero-main .hero-img {
+  height:420px;
+  background: linear-gradient(160deg,#1a2f42,#c0392b);
+  position:relative;
+  overflow:hidden;
+}
+.hero-main .hero-img::after {
+  content:'';
+  position:absolute; inset:0;
+  background: linear-gradient(to top, rgba(0,0,0,.85) 0%, rgba(0,0,0,.1) 60%);
+}
+.hero-img-inner {
+  width:100%; height:100%;
+  object-fit:cover;
+  font-size:0;
+}
+/* SVG placeholder backgrounds for hero images */
+.img-placeholder-1 { background: linear-gradient(135deg,#1a3a52 0%,#c0392b 100%); }
+.img-placeholder-2 { background: linear-gradient(135deg,#2c4a5e 0%,#1a2f42 100%); }
+.img-placeholder-3 { background: linear-gradient(135deg,#0d3a2a 0%,#1a5a3e 100%); }
+.img-placeholder-4 { background: linear-gradient(135deg,#3a1a0d 0%,#7a2d1a 100%); }
+.img-placeholder-5 { background: linear-gradient(135deg,#1a1a3a 0%,#2d1a7a 100%); }
+.img-placeholder-6 { background: linear-gradient(135deg,#0d2a3a 0%,#1a5a7a 100%); }
+
+.hero-main .hero-content {
+  position:absolute; bottom:0; left:0; right:0;
+  padding:1.4rem 1.4rem 1.2rem;
+  z-index:2;
+}
+.hero-cat {
+  display:inline-block;
+  background:var(--red);
+  color:#fff;
+  font-size:.64rem;
+  font-weight:700;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  padding:3px 10px;
+  border-radius:2px;
+  margin-bottom:.5rem;
+}
+.hero-cat.green  { background:#1e7a4f; }
+.hero-cat.gold   { background:var(--gold); color:var(--navy); }
+.hero-cat.blue   { background:#1a5a9e; }
+.hero-cat.purple { background:#5a2d8e; }
+
+.hero-main .hero-content h3 {
+  font-family:var(--ff-head);
+  font-size:1.55rem;
+  font-weight:900;
+  color:#fff;
+  line-height:1.25;
+  margin-bottom:.4rem;
+}
+.hero-meta { font-size:.7rem; color:rgba(255,255,255,.65); display:flex; gap:12px; }
+.hero-meta i { margin-right:3px; }
+
+.hero-small {
+  background:var(--white);
+  border-radius:4px;
+  overflow:hidden;
+  cursor:pointer;
+  border:1px solid var(--border);
+  display:flex;
+  flex-direction:column;
+  transition: box-shadow .18s;
+}
+.hero-small:hover { box-shadow:0 6px 20px rgba(0,0,0,.1); }
+.hero-small .thumb {
+  height:140px;
+}
+.hero-small .hs-body {
+  padding:.75rem;
+  flex:1;
+  display:flex; flex-direction:column;
+}
+.hero-small .hs-body h4 {
+  font-family:var(--ff-head);
+  font-size:.95rem;
+  font-weight:700;
+  line-height:1.3;
+  color:var(--navy);
+  flex:1;
+}
+.hs-meta { font-size:.67rem; color:var(--muted); margin-top:.4rem; }
+
+/* ═══════════════════════════════════════════
+   NEWS CARD (horizontal)
+═══════════════════════════════════════════ */
+.news-card {
+  display:flex;
+  gap:.9rem;
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:4px;
+  overflow:hidden;
+  cursor:pointer;
+  transition: box-shadow .18s, border-color .18s;
+  margin-bottom:.8rem;
+}
+.news-card:hover { box-shadow:0 4px 16px rgba(0,0,0,.09); border-color:#c5d0d8; }
+.news-card .nc-thumb {
+  width:110px;
+  height:80px;
+  flex-shrink:0;
+}
+.news-card .nc-body {
+  padding:.5rem .6rem .5rem 0;
+  flex:1;
+  display:flex; flex-direction:column; justify-content:center;
+}
+.news-card .nc-body h4 {
+  font-size:.88rem;
+  font-weight:700;
+  color:var(--navy);
+  line-height:1.35;
+  margin-bottom:.25rem;
+}
+.news-card .nc-body .nc-meta {
+  font-size:.66rem;
+  color:var(--muted);
+  display:flex; gap:8px;
+}
+
+/* ═══════════════════════════════════════════
+   CATEGORY SECTIONS
+═══════════════════════════════════════════ */
+.cat-section { margin-bottom:2.5rem; }
+.cards-3 {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1rem;
+}
+@media(max-width:900px){ .cards-3{grid-template-columns:1fr 1fr;} }
+@media(max-width:580px){ .cards-3{grid-template-columns:1fr;} }
+
+.card-v {
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:4px;
+  overflow:hidden;
+  cursor:pointer;
+  transition:box-shadow .18s;
+}
+.card-v:hover { box-shadow:0 6px 20px rgba(0,0,0,.09); }
+.card-v .cv-img { height:160px; }
+.card-v .cv-body { padding:.75rem; }
+.card-v .cv-body h4 {
+  font-family:var(--ff-head);
+  font-size:.95rem;
+  font-weight:700;
+  line-height:1.3;
+  color:var(--navy);
+  margin:.35rem 0 .4rem;
+}
+.card-v .cv-body p {
+  font-size:.76rem;
+  color:var(--muted);
+  line-height:1.5;
+}
+.cv-meta { font-size:.65rem; color:var(--muted); margin-top:.45rem; display:flex; gap:8px; align-items:center; }
+.cv-meta i { color:var(--red); }
+
+/* ═══════════════════════════════════════════
+   OPINION / ANALYSIS
+═══════════════════════════════════════════ */
+.opinion-grid {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:1rem;
+}
+@media(max-width:640px){ .opinion-grid{grid-template-columns:1fr;} }
+
+.opinion-card {
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:1rem;
+  display:flex; gap:.75rem;
+  cursor:pointer;
+  transition:box-shadow .18s;
+}
+.opinion-card:hover { box-shadow:0 4px 16px rgba(0,0,0,.09); }
+.author-avatar {
+  width:52px; height:52px;
+  border-radius:50%;
+  flex-shrink:0;
+  overflow:hidden;
+  border:2px solid var(--border);
+}
+.author-avatar div {
+  width:100%; height:100%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.2rem;
+  font-weight:700;
+  font-family:var(--ff-head);
+  color:#fff;
+}
+.oc-body h4 { font-size:.88rem; font-weight:700; color:var(--navy); line-height:1.3; margin-bottom:.2rem; }
+.oc-author { font-size:.68rem; color:var(--red); font-weight:600; }
+.oc-date { font-size:.65rem; color:var(--muted); margin-top:2px; }
+
+/* ═══════════════════════════════════════════
+   VIDEO SECTION
+═══════════════════════════════════════════ */
+.video-card {
+  background:var(--navy);
+  border-radius:4px;
+  overflow:hidden;
+  cursor:pointer;
+  position:relative;
+  transition:box-shadow .18s;
+}
+.video-card:hover { box-shadow:0 8px 24px rgba(0,0,0,.2); }
+.video-card .vc-img {
+  height:150px;
+  position:relative;
+}
+.play-btn {
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(0,0,0,.35);
+  z-index:2;
+  transition:background .18s;
+}
+.video-card:hover .play-btn { background:rgba(192,57,43,.6); }
+.play-btn i { font-size:2.5rem; color:#fff; filter:drop-shadow(0 2px 8px rgba(0,0,0,.4)); }
+.vc-body { padding:.7rem; background:var(--navy); }
+.vc-body h4 { font-size:.83rem; font-weight:700; color:#fff; line-height:1.3; }
+.vc-dur { font-size:.65rem; color:rgba(255,255,255,.5); margin-top:.3rem; }
+
+.videos-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
+@media(max-width:720px){ .videos-3{grid-template-columns:1fr;} }
+
+/* ═══════════════════════════════════════════
+   SIDEBAR
+═══════════════════════════════════════════ */
+.sidebar { display:flex; flex-direction:column; gap:1.6rem; }
+
+/* sidebar widget */
+.widget {
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:4px;
+  overflow:hidden;
+}
+.widget-head {
+  background:var(--navy);
+  color:#fff;
+  padding:.55rem 1rem;
+  font-size:.72rem;
+  font-weight:700;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  display:flex; align-items:center; gap:8px;
+}
+.widget-head i { color:var(--gold); }
+.widget-body { padding:.9rem; }
+
+/* trending */
+.trending-item {
+  display:flex; gap:.7rem; align-items:flex-start;
+  padding:.55rem 0;
+  border-bottom:1px solid var(--border);
+  cursor:pointer;
+  transition:background .12s;
+}
+.trending-item:last-child { border-bottom:none; }
+.trending-item:hover { background:var(--fog); margin:0 -.9rem; padding-left:.9rem; padding-right:.9rem; }
+.t-num {
+  font-family:var(--ff-head);
+  font-size:1.35rem;
+  font-weight:900;
+  color:var(--border);
+  line-height:1;
+  flex-shrink:0;
+  width:28px;
+  text-align:right;
+}
+.trending-item:nth-child(1) .t-num { color:var(--red); }
+.trending-item:nth-child(2) .t-num { color:#c0392b99; }
+.t-body h4 { font-size:.82rem; font-weight:700; color:var(--navy); line-height:1.3; }
+.t-meta { font-size:.64rem; color:var(--muted); margin-top:2px; }
+
+/* newsletter */
+.newsletter-widget .widget-body { padding:1rem; }
+.newsletter-widget p { font-size:.8rem; color:var(--muted); margin-bottom:.8rem; line-height:1.5; }
+.nl-form { display:flex; flex-direction:column; gap:.5rem; }
+.nl-form input {
+  border:1.5px solid var(--border);
+  border-radius:3px;
+  padding:.55rem .8rem;
+  font-size:.82rem;
+  font-family:var(--ff-body);
+  outline:none;
+  transition:border-color .18s;
+}
+.nl-form input:focus { border-color:var(--red); }
+.nl-form button {
+  background:var(--red);
+  color:#fff;
+  border:none;
+  border-radius:3px;
+  padding:.6rem;
+  font-size:.8rem;
+  font-weight:700;
+  letter-spacing:.5px;
+  transition:background .18s;
+}
+.nl-form button:hover { background:var(--red-dk); }
+.nl-success { display:none; color:#1e7a4f; font-size:.8rem; font-weight:600; text-align:center; padding:.3rem; }
+
+/* weather widget */
+.weather-days {
+  display:grid; grid-template-columns:repeat(5,1fr); gap:.3rem;
+  margin-top:.7rem;
+}
+.w-day {
+  text-align:center;
+  background:var(--fog);
+  border-radius:4px;
+  padding:.4rem .2rem;
+  font-size:.62rem;
+  color:var(--muted);
+}
+.w-day i { display:block; font-size:1rem; margin:.3rem 0 .2rem; }
+.w-day strong { font-size:.7rem; color:var(--navy); display:block; }
+.weather-now { display:flex; align-items:center; gap:1rem; }
+.weather-now i { font-size:2.2rem; color:var(--gold); }
+.weather-now .wn-temp { font-size:2rem; font-weight:700; color:var(--navy); line-height:1; }
+.weather-now .wn-city { font-size:.72rem; color:var(--muted); }
+
+/* categories widget */
+.cat-list { list-style:none; }
+.cat-list li a {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:.5rem 0;
+  border-bottom:1px solid var(--border);
+  font-size:.82rem;
+  color:var(--ink);
+  transition:color .15s;
+}
+.cat-list li:last-child a { border-bottom:none; }
+.cat-list li a:hover { color:var(--red); }
+.cat-list li a span {
+  background:var(--fog);
+  color:var(--muted);
+  font-size:.65rem;
+  padding:2px 7px;
+  border-radius:2px;
+  font-weight:600;
+}
+
+/* social stats */
+.social-stats { display:grid; grid-template-columns:1fr 1fr; gap:.5rem; }
+.ss-item {
+  border-radius:4px;
+  padding:.6rem .8rem;
+  display:flex; align-items:center; gap:.5rem;
+  cursor:pointer; transition:opacity .18s;
+}
+.ss-item:hover { opacity:.85; }
+.ss-item i { font-size:1.1rem; color:#fff; }
+.ss-fb { background:#1877f2; }
+.ss-tw { background:#000; }
+.ss-yt { background:#ff0000; }
+.ss-ig { background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); }
+.ss-num { font-weight:700; font-size:.8rem; color:#fff; display:block; line-height:1; }
+.ss-lbl { font-size:.58rem; color:rgba(255,255,255,.75); }
+
+/* ad placeholder */
+.ad-box {
+  background:linear-gradient(135deg,#eef2f7,#e8edf2);
+  border:2px dashed var(--border);
+  border-radius:4px;
+  height:260px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  color:var(--muted);
+  font-size:.75rem; letter-spacing:.5px;
+  text-transform:uppercase;
+}
+.ad-box i { font-size:1.8rem; margin-bottom:.4rem; opacity:.4; }
+
+/* ═══════════════════════════════════════════
+   FULL-WIDTH BAND (magazine / culture)
+═══════════════════════════════════════════ */
+.band {
+  background:var(--navy-md);
+  padding:2.5rem 0;
+  margin:2.5rem 0;
+}
+.band .section-label h2 { color:#fff; }
+.band .section-label .bar { background:var(--gold); }
+.band .section-label a.see-all { color:var(--gold); }
+.band-cards {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1rem;
+}
+@media(max-width:900px){ .band-cards{grid-template-columns:1fr 1fr;} }
+@media(max-width:520px){ .band-cards{grid-template-columns:1fr;} }
+
+.band-card {
+  border-radius:4px;
+  overflow:hidden;
+  cursor:pointer;
+  position:relative;
+  transition:transform .18s;
+}
+.band-card:hover { transform:translateY(-3px); }
+.band-card .bc-img { height:180px; }
+.band-card .bc-img::after {
+  content:'';
+  position:absolute; inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,.75) 0%,transparent 60%);
+}
+.band-card { position:relative; }
+.band-card .bc-body {
+  position:absolute; bottom:0; left:0; right:0;
+  padding:.65rem;
+  z-index:2;
+}
+.band-card .bc-body h4 {
+  font-family:var(--ff-head);
+  font-size:.9rem;
+  font-weight:700;
+  color:#fff;
+  line-height:1.3;
+}
+.band-card .bc-meta { font-size:.62rem; color:rgba(255,255,255,.6); margin-top:.25rem; }
+
+/* ═══════════════════════════════════════════
+   POLL WIDGET
+═══════════════════════════════════════════ */
+.poll-widget .widget-body { padding:1rem; }
+.poll-question { font-size:.85rem; font-weight:700; color:var(--navy); margin-bottom:.9rem; line-height:1.4; }
+.poll-option { margin-bottom:.6rem; }
+.poll-option label {
+  display:flex; align-items:center; gap:.5rem;
+  font-size:.8rem; cursor:pointer;
+  margin-bottom:.25rem;
+}
+.poll-option input[type=radio] { accent-color:var(--red); }
+.poll-bar-wrap {
+  background:var(--fog);
+  border-radius:2px;
+  height:6px;
+  overflow:hidden;
+}
+.poll-bar {
+  height:100%;
+  background:var(--red);
+  border-radius:2px;
+  transition:width .5s ease;
+}
+.poll-pct { font-size:.62rem; color:var(--muted); text-align:right; margin-top:1px; }
+.poll-btn {
+  background:var(--navy);
+  color:#fff;
+  border:none;
+  border-radius:3px;
+  padding:.5rem 1.2rem;
+  font-size:.78rem;
+  font-weight:700;
+  margin-top:.5rem;
+  width:100%;
+  transition:background .18s;
+}
+.poll-btn:hover { background:var(--red); }
+.poll-total { font-size:.65rem; color:var(--muted); text-align:center; margin-top:.4rem; }
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+.site-footer {
+  background:var(--navy);
+  color:rgba(255,255,255,.7);
+  padding:3rem 0 0;
+}
+.footer-grid {
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:2.5rem;
+  padding-bottom:2rem;
+  border-bottom:1px solid rgba(255,255,255,.1);
+}
+@media(max-width:860px){ .footer-grid{grid-template-columns:1fr 1fr;} }
+@media(max-width:520px){ .footer-grid{grid-template-columns:1fr;} }
+
+.footer-brand .logo-text h1 { color:#fff; }
+.footer-brand .logo-text h1 span { color:var(--gold); }
+.footer-brand .logo-text p { color:rgba(255,255,255,.4); }
+.footer-brand p.about { font-size:.8rem; line-height:1.65; margin-top:.9rem; color:rgba(255,255,255,.5); }
+.footer-socials { display:flex; gap:10px; margin-top:1rem; }
+.footer-socials a {
+  width:34px; height:34px;
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:4px;
+  display:flex; align-items:center; justify-content:center;
+  color:rgba(255,255,255,.6);
+  font-size:.85rem;
+  transition:all .18s;
+}
+.footer-socials a:hover { background:var(--red); border-color:var(--red); color:#fff; }
+
+.footer-col h3 {
+  font-size:.75rem;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  color:var(--gold);
+  margin-bottom:.9rem;
+  padding-bottom:.5rem;
+  border-bottom:1px solid rgba(255,255,255,.1);
+}
+.footer-col ul { list-style:none; }
+.footer-col ul li {
+  padding:.3rem 0;
+  font-size:.79rem;
+}
+.footer-col ul li a {
+  color:rgba(255,255,255,.55);
+  transition:color .15s;
+  display:flex; align-items:center; gap:6px;
+}
+.footer-col ul li a:hover { color:var(--gold); }
+.footer-col ul li a i { font-size:.6rem; color:var(--red); }
+
+.footer-bottom {
+  padding:1.1rem 0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:.72rem;
+  color:rgba(255,255,255,.35);
+  flex-wrap:wrap; gap:.5rem;
+}
+.footer-bottom a { color:rgba(255,255,255,.4); }
+.footer-bottom a:hover { color:var(--gold); }
+
+/* ═══════════════════════════════════════════
+   SEARCH OVERLAY
+═══════════════════════════════════════════ */
+.search-overlay {
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.85);
+  z-index:1000;
+  display:none;
+  align-items:flex-start;
+  justify-content:center;
+  padding-top:10vh;
+}
+.search-overlay.open { display:flex; }
+.search-box {
+  background:var(--white);
+  border-radius:6px;
+  width:min(700px, 92vw);
+  overflow:hidden;
+  box-shadow:0 24px 60px rgba(0,0,0,.4);
+}
+.search-box .sb-top {
+  display:flex; align-items:center;
+  border-bottom:2px solid var(--red);
+}
+.search-box input {
+  flex:1;
+  border:none;
+  padding:1.1rem 1.2rem;
+  font-size:1.1rem;
+  font-family:var(--ff-body);
+  outline:none;
+}
+.search-box .sb-close {
+  background:none; border:none;
+  font-size:1.2rem; color:var(--muted);
+  padding:0 1.1rem; cursor:pointer;
+  transition:color .15s;
+}
+.search-box .sb-close:hover { color:var(--red); }
+.search-results { padding:1rem 1.2rem; max-height:50vh; overflow-y:auto; }
+.sr-item {
+  display:flex; gap:.8rem; align-items:center;
+  padding:.6rem 0;
+  border-bottom:1px solid var(--border);
+  cursor:pointer;
+}
+.sr-item:last-child { border-bottom:none; }
+.sr-item:hover h4 { color:var(--red); }
+.sr-thumb { width:60px; height:45px; border-radius:3px; flex-shrink:0; overflow:hidden; }
+.sr-item h4 { font-size:.85rem; font-weight:700; color:var(--navy); line-height:1.3; }
+.sr-item p { font-size:.68rem; color:var(--muted); margin-top:2px; }
+.sr-empty { font-size:.85rem; color:var(--muted); text-align:center; padding:1.5rem; }
+
+/* ═══════════════════════════════════════════
+   MOBILE NAV DRAWER
+═══════════════════════════════════════════ */
+.mobile-nav {
+  position:fixed; top:0; left:0;
+  width:280px; height:100vh;
+  background:var(--navy);
+  z-index:500;
+  transform:translateX(-100%);
+  transition:transform .3s ease;
+  overflow-y:auto;
+}
+.mobile-nav.open { transform:translateX(0); }
+.mn-header {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1rem;
+  border-bottom:1px solid rgba(255,255,255,.1);
+}
+.mn-header span { font-family:var(--ff-head); font-weight:900; color:#fff; font-size:1.1rem; }
+.mn-header span em { color:var(--gold); font-style:normal; }
+.mn-close { background:none; border:none; color:rgba(255,255,255,.6); font-size:1.2rem; cursor:pointer; }
+.mn-link {
+  display:flex; align-items:center; gap:10px;
+  padding:.75rem 1.2rem;
+  color:rgba(255,255,255,.7);
+  font-size:.85rem;
+  font-weight:600;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  transition:background .15s, color .15s;
+}
+.mn-link:hover { background:rgba(255,255,255,.07); color:#fff; }
+.mn-link i { width:18px; text-align:center; color:var(--gold); }
+.nav-overlay {
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.5);
+  z-index:499;
+  display:none;
+}
+.nav-overlay.open { display:block; }
+
+/* ═══════════════════════════════════════════
+   BACK TO TOP
+═══════════════════════════════════════════ */
+.back-top {
+  position:fixed; bottom:28px; right:24px;
+  width:42px; height:42px;
+  background:var(--red);
+  color:#fff;
+  border:none;
+  border-radius:4px;
+  font-size:1rem;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 4px 16px rgba(192,57,43,.4);
+  opacity:0; pointer-events:none;
+  transition:opacity .3s;
+  z-index:300;
+}
+.back-top.show { opacity:1; pointer-events:all; }
+
+/* ═══════════════════════════════════════════
+   NOTIFICATION TOAST
+═══════════════════════════════════════════ */
+.toast {
+  position:fixed; bottom:80px; right:24px;
+  background:var(--navy);
+  color:#fff;
+  padding:.7rem 1.1rem;
+  border-left:4px solid var(--gold);
+  border-radius:4px;
+  font-size:.8rem;
+  font-weight:500;
+  max-width:280px;
+  box-shadow:0 4px 20px rgba(0,0,0,.3);
+  z-index:400;
+  transform:translateX(120%);
+  transition:transform .3s ease;
+}
+.toast.show { transform:translateX(0); }
+.toast i { color:var(--gold); margin-right:8px; }
+
+/* ═══════════════════════════════════════════
+   UTILITY
+═══════════════════════════════════════════ */
+.tag {
+  display:inline-block;
+  background:var(--tag-bg);
+  color:var(--tag-txt);
+  font-size:.62rem;
+  font-weight:700;
+  letter-spacing:.5px;
+  padding:2px 7px;
+  border-radius:2px;
+  text-transform:uppercase;
+}
+.divider { border:none; border-top:1px solid var(--border); margin:2rem 0; }
+
+@media(max-width:768px){
+  .site-header { flex-wrap:wrap; padding:.8rem 1rem; }
+  .header-weather { display:none; }
+  .hamburger { display:flex; align-items:center; }
+  .nav-inner .nav-link { display:none; }
+  .nav-right .nav-live-btn { font-size:.65rem; padding:4px 10px; }
+}
+@media(max-width:480px){
+  .hero-main .hero-content h3 { font-size:1.15rem; }
+  .hero-main .hero-img { height:280px; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><i class="fas fa-bell"></i><span id="toastMsg">Son dakika haber geldi!</span></div>
+
+<!-- BACK TO TOP -->
+<button class="back-top" id="backTop" title="Yukarı çık"><i class="fas fa-arrow-up"></i></button>
+
+<!-- MOBILE NAV OVERLAY -->
+<div class="nav-overlay" id="navOverlay"></div>
+
+<!-- MOBILE DRAWER -->
+<nav class="mobile-nav" id="mobileNav">
+  <div class="mn-header">
+    <span>Eu<em>kurd</em> Digital</span>
+    <button class="mn-close" id="mnClose"><i class="fas fa-times"></i></button>
+  </div>
+  <a class="mn-link" href="#"><i class="fas fa-home"></i>Ana Sayfa</a>
+  <a class="mn-link" href="#"><i class="fas fa-globe"></i>Kürdistan</a>
+  <a class="mn-link" href="#"><i class="fas fa-earth-europe"></i>Dünya</a>
+  <a class="mn-link" href="#"><i class="fas fa-landmark"></i>Siyaset</a>
+  <a class="mn-link" href="#"><i class="fas fa-chart-line"></i>Ekonomi</a>
+  <a class="mn-link" href="#"><i class="fas fa-palette"></i>Kültür & Sanat</a>
+  <a class="mn-link" href="#"><i class="fas fa-heartbeat"></i>Sağlık</a>
+  <a class="mn-link" href="#"><i class="fas fa-running"></i>Spor</a>
+  <a class="mn-link" href="#"><i class="fas fa-video"></i>Video</a>
+  <a class="mn-link" href="#"><i class="fas fa-pen-nib"></i>Analiz & Görüş</a>
+  <a class="mn-link" href="#"><i class="fas fa-envelope"></i>İletişim</a>
+</nav>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-box">
+    <div class="sb-top">
+      <input type="text" id="searchInput" placeholder="Haberlerde ara…">
+      <button class="sb-close" id="searchClose"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="search-results" id="searchResults">
+      <div class="sr-empty"><i class="fas fa-search" style="font-size:1.8rem;opacity:.3;display:block;margin-bottom:.5rem;"></i>Aramak istediğiniz konuyu yazın.</div>
+    </div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-label"><i class="fas fa-bolt"></i> Son Dakika</div>
+  <div class="ticker-inner" id="tickerInner">
+    <span>Kürdistan Bölgesi'nde yeni petrol anlaşması imzalandı</span>
+    <span>BM: Orta Doğu'da insani kriz derinleşiyor</span>
+    <span>Erbil'de uluslararası ticaret fuarı kapılarını açtı</span>
+    <span>Türkiye-KBY görüşmeleri yeniden başladı</span>
+    <span>Kürt diasporası Avrupa'da kültür etkinliği düzenledi</span>
+    <span>Irak federal hükümeti ile bütçe müzakereleri sürüyor</span>
+    <span>Newroz kutlamaları dünyada büyük katılımla gerçekleşti</span>
+  </div>
+</div>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <span><i class="fas fa-calendar-alt"></i><span id="dateDisplay"></span></span>
+    <span><i class="fas fa-map-marker-alt"></i>Erbil · Diyarbakır · Kobani</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:1.5rem;">
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="switchLang(this,'TR')">TR</button>
+      <button class="lang-btn" onclick="switchLang(this,'KU')">KU</button>
+      <button class="lang-btn" onclick="switchLang(this,'EN')">EN</button>
+      <button class="lang-btn" onclick="switchLang(this,'AR')">AR</button>
+    </div>
+    <div class="topbar-socials">
+      <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" title="Twitter/X"><i class="fab fa-x-twitter"></i></a>
+      <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+      <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="#" title="Telegram"><i class="fab fa-telegram"></i></a>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="logo-block">
+    <div class="logo-icon">EK</div>
+    <div class="logo-text">
+      <h1>Eu<span>kurd</span> Digital</h1>
+      <p>Kurdistan & World News</p>
+    </div>
+  </div>
+  <div class="header-search">
+    <input type="text" id="headerSearchIn" placeholder="Haber ara…">
+    <button onclick="openSearch()"><i class="fas fa-search"></i></button>
+  </div>
+  <div class="header-weather">
+    <div class="weather-now">
+      <i class="fas fa-sun"></i>
+      <div>
+        <div class="wn-temp">28°</div>
+        <div class="wn-city">Erbil, KBY</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- MAIN NAV -->
+<nav class="main-nav">
+  <div class="nav-inner container">
+    <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+    <a href="#" class="nav-link active"><i class="fas fa-home"></i>Ana Sayfa</a>
+    <div class="nav-item">
+      <a href="#" class="nav-link"><i class="fas fa-globe"></i>Kürdistan <i class="fas fa-chevron-down" style="font-size:.6rem;"></i></a>
+      <div class="nav-dropdown">
+        <a href="#"><i class="fas fa-circle" style="font-size:.4rem;color:var(--red);"></i> Güney Kürdistan</a>
+        <a href="#"><i class="fas fa-circle" style="font-size:.4rem;color:var(--red);"></i> Kuzey Kürdistan</a>
+        <a href="#"><i class="fas fa-circle" style="font-size:.4rem;color:var(--red);"></i> Doğu Kürdistan</a>
+        <a href="#"><i class="fas fa-circle" style="font-size:.4rem;color:var(--red);"></i> Batı Kürdistan</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <a href="#" class="nav-link"><i class="fas fa-earth-europe"></i>Dünya <i class="fas fa-chevron-down" style="font-size:.6rem;"></i></a>
+      <div class="nav-dropdown">
+        <a href="#">Orta Doğu</a>
+        <a href="#">Avrupa</a>
+        <a href="#">Amerika</a>
+        <a href="#">Asya & Pasifik</a>
+      </div>
+    </div>
+    <a href="#" class="nav-link"><i class="fas fa-landmark"></i>Siyaset</a>
+    <a href="#" class="nav-link"><i class="fas fa-chart-line"></i>Ekonomi</a>
+    <a href="#" class="nav-link"><i class="fas fa-palette"></i>Kültür</a>
+    <a href="#" class="nav-link"><i class="fas fa-running"></i>Spor</a>
+    <a href="#" class="nav-link"><i class="fas fa-video"></i>Video</a>
+    <a href="#" class="nav-link"><i class="fas fa-pen-nib"></i>Analiz <span class="badge">YENİ</span></a>
+    <div class="nav-right">
+      <button class="nav-live-btn" onclick="showToast('Canlı yayın yakında başlıyor…')">
+        <span class="live-dot"></span>CANLI
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ MAIN CONTENT ═══ -->
+<div class="container">
+<div class="page-body">
+
+<!-- ── MAIN COLUMN ── -->
+<main>
+
+  <!-- HERO -->
+  <div class="section-label">
+    <div class="bar"></div><h2>Manşet Haberler</h2>
+    <a href="#" class="see-all">Tümü <i class="fas fa-arrow-right"></i></a>
+  </div>
+  <div class="hero-grid">
+    <!-- Main hero -->
+    <div class="hero-main" onclick="showToast('Haber açılıyor…')">
+      <div class="hero-img img-placeholder-1">
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+          <i class="fas fa-mountain" style="font-size:5rem;color:rgba(255,255,255,.1);"></i>
+        </div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-cat gold">Kürdistan</div>
+        <h3>Kürdistan Bölgesi ile Bağdat arasındaki petrol geliri anlaşması yeni bir döneme giriyor</h3>
+        <div class="hero-meta">
+          <span><i class="far fa-clock"></i>2 saat önce</span>
+          <span><i class="fas fa-user"></i>Roj Baran</span>
+          <span><i class="far fa-eye"></i>14.2K görüntülenme</span>
+        </div>
+      </div>
+    </div>
+    <!-- Small cards -->
+    <div class="hero-small" onclick="showToast('Haber açılıyor…')">
+      <div class="thumb img-placeholder-2">
+        <div style="height:100%;display:flex;align-items:center;justify-content:center;">
+          <i class="fas fa-globe-europe" style="font-size:3rem;color:rgba(255,255,255,.15);"></i>
+        </div>
+      </div>
+      <div class="hs-body">
+        <div class="hero-cat blue" style="font-size:.58rem;">Dünya</div>
+        <h4>AB'nin Kürdistan politikasında köklü bir değişim sinyali veriyor</h4>
+        <div class="hs-meta"><i class="far fa-clock"></i> 4 saat önce &nbsp;|&nbsp; <i class="fas fa-user"></i> Dilnoza Karim</div>
+      </div>
+    </div>
+    <div class="hero-small" onclick="showToast('Haber açılıyor…')">
+      <div class="thumb img-placeholder-3">
+        <div style="height:100%;display:flex;align-items:center;justify-content:center;">
+          <i class="fas fa-leaf" style="font-size:3rem;color:rgba(255,255,255,.15);"></i>
+        </div>
+      </div>
+      <div class="hs-body">
+        <div class="hero-cat green" style="font-size:.58rem;">Kültür</div>
+        <h4>Newroz festivali bu yıl 40 ülkede eş zamanlı kutlandı</h4>
+        <div class="hs-meta"><i class="far fa-clock"></i> 6 saat önce &nbsp;|&nbsp; <i class="fas fa-user"></i> Solin Agri</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIYASET -->
+  <div class="cat-section">
+    <div class="section-label">
+      <div class="bar"></div><h2>Siyaset</h2>
+      <a href="#" class="see-all">Tümü <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="cards-3">
+      <div class="card-v" onclick="showToast('Haber açılıyor…')">
+        <div class="cv-img img-placeholder-4">
+          <div style="height:100%;display:flex;align-items:center;justify-content:center;"><i class="fas fa-landmark" style="font-size:2.5rem;color:rgba(255,255,255,.15);"></i></div>
+        </div>
+        <div class="cv-body">
+          <div class="hero-cat">Siyaset</div>
+          <h4>Masoud Barzani'nin açıklamaları bölgede geniş yankı uyandırdı</h4>
+          <p>KDP liderinin yaptığı açıklama hem yerel hem de uluslararası basında gündem yarattı.</p>
+          <div class="cv-meta"><i class="far fa-clock"></i>1 sa önce <i class="far fa-comment" style="color:var(--muted);margin-left:4px;"></i>43</div>
+        </div>
+      </div>
+      <div class="card-v" onclick="showToast('Haber açılıyor…')">
+        <div class="cv-img img-placeholder-5">
+          <div style="height:100%;display:flex;align-items:center;justify-content:center;"><i class="fas fa-vote-yea" style="font-size:2.5rem;color:rgba(255,255,255,.15);"></i></div>
+        </div>
+        <div class="cv-body">
+          <div class="hero-cat blue">Seçim</div>
+          <h4>Kürdistan Bölgesi parlamento seçimlerine 3 ay kaldı</h4>
+          <p>Seçim takvimi onaylandı; partiler kampanya hazırlıklarına başladı.</p>
+          <div class="cv-meta"><i class="far fa-clock"></i>3 sa önce <i class="far fa-comment" style="color:var(--muted);margin-left:4px;"></i>87</div>
+        </div>
+      </div>
+      <div class="card-v" onclick="showToast('Haber açılıyor…')">
+        <div class="cv-img img-placeholder-6">
+          <div style="height:100%;display:flex;align-items:center;justify-content:center;"><i class="fas fa-handshake" style="font-size:2.5rem;color:rgba(255,255,255,.15);"></i></div>
+        </div>
+        <div class="cv-body">
+          <div class="hero-cat">Diplomasi</div>
+          <h4>Türkiye ile KBY arasında yeni enerji işbirliği görüşmeleri</h4>
+          <p>İki taraflı görüşmeler yeniden masaya taşındı; enerji koridoru önerisi gündemde.</p>
+          <div class="cv-meta"><i class="far fa-clock"></i>5 sa önce <i class="far fa-comment" style="color:var(--muted);margin-left:4px;"></i>31</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SON HABERLER listesi -->
+  <div class="cat-section">
+    <div class="section-label">
+      <div class="bar"></div><h2>Son Haberler</h2>
+      <a href="#" class="see-all">Tümü <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div id="newsList">
+      <!-- dinamik liste -->
+    </div>
+    <div style="text-align:center;margin-top:1rem;">
+      <button onclick="loadMoreNews()" style="background:var(--navy);color:#fff;border:none;border-radius:4px;padding:.65rem 2rem;font-size:.82rem;font-weight:700;cursor:pointer;transition:background .18s;" onmouseover="this.style.background='var(--red)'" onmouseout="this.style.background='var(--navy)'"><i class="fas fa-plus" style="margin-right:6px;"></i>Daha Fazla Yükle</button>
+    </div>
+  </div>
+
+  <!-- ANALİZ -->
+  <div class="cat-section">
+    <div class="section-label">
+      <div class="bar"></div><h2>Analiz & Görüş</h2>
+      <a href="#" class="see-all">Tümü <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="opinion-grid">
+      <div class="opinion-card" onclick="showToast('Yazı açılıyor…')">
+        <div class="author-avatar"><div style="background:#c0392b;">RB</div></div>
+        <div class="oc-body">
+          <h4>Kürdistan'ın enerji bağımsızlığı ve geleceği: Stratejik bir değerlendirme</h4>
+          <div class="oc-author">Roj Baran — Baş Editör</div>
+          <div class="oc-date"><i class="far fa-calendar" style="margin-right:4px;"></i>8 Haziran 2026</div>
+        </div>
+      </div>
+      <div class="opinion-card" onclick="showToast('Yazı açılıyor…')">
+        <div class="author-avatar"><div style="background:#1a5a9e;">DK</div></div>
+        <div class="oc-body">
+          <h4>Diaspora politikaları ve Kürt kimliğinin Avrupa'daki geleceği</h4>
+          <div class="oc-author">Dilnoza Karim — Dış Politika Editörü</div>
+          <div class="oc-date"><i class="far fa-calendar" style="margin-right:4px;"></i>7 Haziran 2026</div>
+        </div>
+      </div>
+      <div class="opinion-card" onclick="showToast('Yazı açılıyor…')">
+        <div class="author-avatar"><div style="background:#1e7a4f;">SA</div></div>
+        <div class="oc-body">
+          <h4>Newroz'dan seçime: Kürt kültürel yeniden uyanışı ve siyasi dönüşüm</h4>
+          <div class="oc-author">Solin Agri — Kültür Yazarı</div>
+          <div class="oc-date"><i class="far fa-calendar" style="margin-right:4px;"></i>6 Haziran 2026</div>
+        </div>
+      </div>
+      <div class="opinion-card" onclick="showToast('Yazı açılıyor…')">
+        <div class="author-avatar"><div style="background:#5a2d8e;">HM</div></div>
+        <div class="oc-body">
+          <h4>Irak'ın federal yapısı: Kürt bölgelerinin yeni anayasal statüsü ne olacak?</h4>
+          <div class="oc-author">Heval Mahmud — Hukuk Analisti</div>
+          <div class="oc-date"><i class="far fa-calendar" style="margin-right:4px;"></i>5 Haziran 2026</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- VİDEOLAR -->
+  <div class="cat-section">
+    <div class="section-label">
+      <div class="bar"></div><h2>Video Haberler</h2>
+      <a href="#" class="see-all">Tümü <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="videos-3">
+      <div class="video-card" onclick="showToast('Video oynatılıyor…')">
+        <div class="vc-img img-placeholder-1" style="position:relative;">
+          <div style="height:100%;display:flex;align-items:center;justify-content:center;"><i class="fas fa-city" style="font-size:2.5rem;color:rgba(255,255,255,.2);"></i></div>
+          <div class="play-btn"><i class="fas fa-play-circle"></i></div>
+        </div>
+        <div class="vc-body">
+          <h4>Erbil'de yeni uluslararası havalimanı terminali törenle açıldı</h4>
+          <div class="vc-dur"><i class="far fa-clock" style="margin-right:3px;"></i>04:32 &nbsp;·&nbsp; <i class="far fa-eye" style="margin-right:3px;"></i>9.8K</div>
+        </div>
+      </div>
+      <div class="video-card" onclick="showToast('Video oynatılıyor…')">
+        <div class="vc-img img-placeholder-3" style="position:relative;">
+          <div style="height:100%;display:flex;align-items:center;justify-content:center;"><i class="fas fa-users" style="font-size:2.5rem;color:rgba(255,255,255,.2);"></i></div>
+          <div class="play-btn"><i class="fas fa-play-circle"></i></div>
+        </div>
+        <div class="vc-body">
+          <h4>Kobani'de barış anıtının açılış töreni binlerce kişiyle kutlandı</h4>
+          <div class="vc-dur"><i class="far fa-clock" style="margin-right:3px;"></i>06:15 &nbsp;·&nbsp; <i class="far fa-eye" style="margin-right:3px;"></i>21.3K</div>
+        </div>
+      </div>
+      <div class="video-card" onclick="showToast('Video oynatılıyor…')">
+        <div class="vc-img img-placeholder-4" style="position:relative;">
+          <div style="height:100%;display:flex;align-items:center;justify-content:center;"><i class="fas fa-microphone-alt" style="font-size:2.5rem;color:rgba(255,255,255,.2);"></i></div>
+          <div class="play-btn"><i class="fas fa-play-circle"></i></div>
+        </div>
+        <div class="vc-body">
+          <h4>Özel röportaj: Kürdistan Başkanı ile ekonomi ve geleceğe dair</h4>
+          <div class="vc-dur"><i class="far fa-clock" style="margin-right:3px;"></i>18:40 &nbsp;·&nbsp; <i class="far fa-eye" style="margin-right:3px;"></i>34.1K</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── SIDEBAR ── -->
+<aside class="sidebar">
+
+  <!-- Trending -->
+  <div class="widget">
+    <div class="widget-head"><i class="fas fa-fire"></i>En Çok Okunanlar</div>
+    <div class="widget-body" id="trendingList"></div>
+  </div>
+
+  <!-- Ad -->
+  <div class="ad-box">
+    <i class="fas fa-rectangle-ad"></i>
+    Reklam Alanı<br><small>300 × 250</small>
+  </div>
+
+  <!-- Newsletter -->
+  <div class="widget newsletter-widget">
+    <div class="widget-head"><i class="fas fa-envelope-open-text"></i>Bülten Aboneliği</div>
+    <div class="widget-body">
+      <p>Her sabah en önemli Kürdistan haberlerini e-postanıza gönderelim.</p>
+      <div class="nl-form">
+        <input type="email" id="nlEmail" placeholder="E-posta adresiniz">
+        <button onclick="subscribeNewsletter()"><i class="fas fa-paper-plane"></i> Abone Ol</button>
+      </div>
+      <div class="nl-success" id="nlSuccess"><i class="fas fa-check-circle"></i> Başarıyla abone oldunuz!</div>
+    </div>
+  </div>
+
+  <!-- Weather -->
+  <div class="widget">
+    <div class="widget-head"><i class="fas fa-cloud-sun"></i>Hava Durumu — KBY</div>
+    <div class="widget-body">
+      <div class="weather-now">
+        <i class="fas fa-sun"></i>
+        <div>
+          <div class="wn-temp">28°C</div>
+          <div class="wn-city">Erbil · Güneşli</div>
+        </div>
+      </div>
+      <div class="weather-days">
+        <div class="w-day"><span>Pzt</span><i class="fas fa-sun" style="color:var(--gold);"></i><strong>31°</strong></div>
+        <div class="w-day"><span>Sal</span><i class="fas fa-cloud-sun" style="color:#aaa;"></i><strong>27°</strong></div>
+        <div class="w-day"><span>Çar</span><i class="fas fa-cloud" style="color:#aaa;"></i><strong>24°</strong></div>
+        <div class="w-day"><span>Per</span><i class="fas fa-cloud-rain" style="color:#6b9de8;"></i><strong>21°</strong></div>
+        <div class="w-day"><span>Cum</span><i class="fas fa-sun" style="color:var(--gold);"></i><strong>29°</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Categories -->
+  <div class="widget">
+    <div class="widget-head"><i class="fas fa-th-large"></i>Kategoriler</div>
+    <div class="widget-body">
+      <ul class="cat-list">
+        <li><a href="#">Kürdistan <span>248</span></a></li>
+        <li><a href="#">Siyaset <span>195</span></a></li>
+        <li><a href="#">Dünya <span>312</span></a></li>
+        <li><a href="#">Ekonomi <span>87</span></a></li>
+        <li><a href="#">Kültür & Sanat <span>134</span></a></li>
+        <li><a href="#">Spor <span>76</span></a></li>
+        <li><a href="#">Sağlık <span>43</span></a></li>
+        <li><a href="#">Teknoloji <span>61</span></a></li>
+        <li><a href="#">Analiz <span>55</span></a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Poll -->
+  <div class="widget poll-widget">
+    <div class="widget-head"><i class="fas fa-poll"></i>Anket</div>
+    <div class="widget-body">
+      <div class="poll-question">Kürdistan Bölgesi'nin en öncelikli sorunu sizce nedir?</div>
+      <div id="pollOptions">
+        <div class="poll-option">
+          <label><input type="radio" name="poll" value="0"> Ekonomik kalkınma</label>
+          <div class="poll-bar-wrap"><div class="poll-bar" style="width:42%"></div></div>
+          <div class="poll-pct" id="pp0">%42 · 1.240 oy</div>
+        </div>
+        <div class="poll-option">
+          <label><input type="radio" name="poll" value="1"> Siyasi istikrar</label>
+          <div class="poll-bar-wrap"><div class="poll-bar" style="width:31%"></div></div>
+          <div class="poll-pct" id="pp1">%31 · 912 oy</div>
+        </div>
+        <div class="poll-option">
+          <label><input type="radio" name="poll" value="2"> Güvenlik</label>
+          <div class="poll-bar-wrap"><div class="poll-bar" style="width:18%"></div></div>
+          <div class="poll-pct" id="pp2">%18 · 530 oy</div>
+        </div>
+        <div class="poll-option">
+          <label><input type="radio" name="poll" value="3"> Eğitim & kültür</label>
+          <div class="poll-bar-wrap"><div class="poll-bar" style="width:9%"></div></div>
+          <div class="poll-pct" id="pp3">%9 · 265 oy</div>
+        </div>
+      </div>
+      <button class="poll-btn" onclick="submitPoll()"><i class="fas fa-check"></i> Oyumu Gönder</button>
+      <div class="poll-total">Toplam 2.947 oy</div>
+    </div>
+  </div>
+
+  <!-- Social stats -->
+  <div class="widget">
+    <div class="widget-head"><i class="fas fa-share-nodes"></i>Sosyal Medya</div>
+    <div class="widget-body" style="padding:.7rem;">
+      <div class="social-stats">
+        <div class="ss-item ss-fb" onclick="showToast('Facebook sayfasına gidiliyor…')">
+          <i class="fab fa-facebook-f"></i>
+          <div><span class="ss-num">48.2K</span><span class="ss-lbl">takipçi</span></div>
+        </div>
+        <div class="ss-item ss-tw" onclick="showToast('X sayfasına gidiliyor…')">
+          <i class="fab fa-x-twitter"></i>
+          <div><span class="ss-num">31.7K</span><span class="ss-lbl">takipçi</span></div>
+        </div>
+        <div class="ss-item ss-yt" onclick="showToast('YouTube kanalına gidiliyor…')">
+          <i class="fab fa-youtube"></i>
+          <div><span class="ss-num">12.4K</span><span class="ss-lbl">abone</span></div>
+        </div>
+        <div class="ss-item ss-ig" onclick="showToast('Instagram sayfasına gidiliyor…')">
+          <i class="fab fa-instagram"></i>
+          <div><span class="ss-num">19.1K</span><span class="ss-lbl">takipçi</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</aside>
+</div>
+</div>
+
+<!-- KÜLTÜR & SANAT BAND -->
+<div class="band">
+  <div class="container">
+    <div class="section-label">
+      <div class="bar"></div>
+      <h2>Kültür & Sanat</h2>
+      <a href="#" class="see-all" style="color:var(--gold);">Tümü <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="band-cards">
+      <div class="band-card" onclick="showToast('Haber açılıyor…')">
+        <div class="bc-img img-placeholder-3" style="height:180px;display:flex;align-items:center;justify-content:center;">
+          <i class="fas fa-music" style="font-size:3rem;color:rgba(255,255,255,.2);"></i>
+        </div>
+        <div class="bc-body">
+          <div class="hero-cat green" style="font-size:.58rem;">Müzik</div>
+          <h4>Kürt müziğinin uluslararası arenada yükselen sesi</h4>
+          <div class="bc-meta"><i class="far fa-clock"></i> 2 sa önce</div>
+        </div>
+      </div>
+      <div class="band-card" onclick="showToast('Haber açılıyor…')">
+        <div class="bc-img img-placeholder-5" style="height:180px;display:flex;align-items:center;justify-content:center;">
+          <i class="fas fa-book-open" style="font-size:3rem;color:rgba(255,255,255,.2);"></i>
+        </div>
+        <div class="bc-body">
+          <div class="hero-cat purple" style="font-size:.58rem;">Edebiyat</div>
+          <h4>Kürtçe roman dünya dillerine çevriliyor: Yeni bir ivme</h4>
+          <div class="bc-meta"><i class="far fa-clock"></i> 5 sa önce</div>
+        </div>
+      </div>
+      <div class="band-card" onclick="showToast('Haber açılıyor…')">
+        <div class="bc-img img-placeholder-6" style="height:180px;display:flex;align-items:center;justify-content:center;">
+          <i class="fas fa-film" style="font-size:3rem;color:rgba(255,255,255,.2);"></i>
+        </div>
+        <div class="bc-body">
+          <div class="hero-cat blue" style="font-size:.58rem;">Sinema</div>
+          <h4>Kürt yönetmenin filmi Cannes'da ödül kazandı</h4>
+          <div class="bc-meta"><i class="far fa-clock"></i> 1 gün önce</div>
+        </div>
+      </div>
+      <div class="band-card" onclick="showToast('Haber açılıyor…')">
+        <div class="bc-img img-placeholder-4" style="height:180px;display:flex;align-items:center;justify-content:center;">
+          <i class="fas fa-paint-brush" style="font-size:3rem;color:rgba(255,255,255,.2);"></i>
+        </div>
+        <div class="bc-body">
+          <div class="hero-cat gold" style="font-size:.58rem;">Sanat</div>
+          <h4>Erbil'de açılan çağdaş sanat galerisi kapılarını açtı</h4>
+          <div class="bc-meta"><i class="far fa-clock"></i> 2 gün önce</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-block">
+          <div class="logo-icon">EK</div>
+          <div class="logo-text">
+            <h1>Eu<span>kurd</span> Digital</h1>
+            <p>Kurdistan & World News</p>
+          </div>
+        </div>
+        <p class="about">Eukurd Digital, Kürdistan ve dünyadan bağımsız, çok dilli dijital haber platformudur. Kürtçe, Türkçe, İngilizce ve Arapça yayın yapan ajansımız habercilikte doğruluğu ve şeffaflığı temel ilke edinmiştir.</p>
+        <div class="footer-socials">
+          <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" title="X"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" title="Telegram"><i class="fab fa-telegram"></i></a>
+          <a href="#" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h3>Bölümler</h3>
+        <ul>
+          <li><a href="#"><i class="fas fa-angle-right"></i>Kürdistan</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i>Dünya</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i>Siyaset</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i>Ekonomi</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i>Kültür & Sanat</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i>Spor</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i>Video</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i>Analiz & Görüş</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Kurumsal</h3>
+        <ul>
+          <li><a href="#"><i class="fas fa-angle-right"></i>Hakkımızda</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i>Editoryal İlkeler</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i>Ekibimiz</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i>Kariyer</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i>Reklam</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i>İletişim</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i>Gizlilik Politikası</a></li>
+          <li><a href="#"><i class="fas fa-angle-right"></i>Kullanım Koşulları</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>İletişim</h3>
+        <ul>
+          <li><a href="#"><i class="fas fa-map-marker-alt"></i>Erbil, Kürdistan Bölgesi</a></li>
+          <li><a href="#"><i class="fas fa-envelope"></i>info@eukurd.digital</a></li>
+          <li><a href="#"><i class="fas fa-phone"></i>+964 750 000 0000</a></li>
+          <li><a href="#"><i class="fas fa-rss"></i>RSS Bülteni</a></li>
+          <li><a href="#"><i class="fas fa-mobile-alt"></i>Mobil Uygulama</a></li>
+        </ul>
+        <div style="margin-top:1rem;font-size:.72rem;color:rgba(255,255,255,.35);">
+          <i class="fas fa-shield-halved" style="color:var(--gold);margin-right:4px;"></i>
+          Bağımsız Habercilik Taahhüdü
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Eukurd Digital. Tüm hakları saklıdır.</span>
+      <span>
+        <a href="#">Gizlilik</a> &nbsp;·&nbsp;
+        <a href="#">Çerezler</a> &nbsp;·&nbsp;
+        <a href="#">Yayın İlkeleri</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════
+   JAVASCRIPT
+═══════════════════════════════════════════ -->
+<script>
+/* ── DATE ── */
+const days = ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'];
+const months = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+function formatDate() {
+  const d = new Date();
+  return `${days[d.getDay()]}, ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+}
+document.getElementById('dateDisplay').textContent = formatDate();
+
+/* ── NEWS DATA ── */
+const newsItems = [
+  { cat:'Dünya', catClass:'blue', title:'Suriye kuzeyindeki Kürt grupları yeni bir diyalog süreci başlatıyor', time:'18 dk önce', author:'Reuters ajansı', views:'4.1K', colorIdx:1 },
+  { cat:'Ekonomi', catClass:'', title:'KBY bütçe tasarısı mecliste onaylandı; altyapıya büyük pay', time:'45 dk önce', author:'Bahar Tekin', views:'2.8K', colorIdx:2 },
+  { cat:'Spor', catClass:'green', title:'Kürdistan milli futbol takımı CONIFA turnuvasında şampiyon', time:'1 sa önce', author:'Spor Masası', views:'9.7K', colorIdx:3 },
+  { cat:'Sağlık', catClass:'purple', title:'Erbil'de uluslararası standartlarda yeni hastane açıldı', time:'2 sa önce', author:'Lavin Şiwan', views:'1.9K', colorIdx:4 },
+  { cat:'Teknoloji', catClass:'blue', title:'KBY'de girişimcilik ekosistemi büyüyor: 40 yeni start-up', time:'3 sa önce', author:'Dijital Masa', views:'3.3K', colorIdx:5 },
+  { cat:'Kültür', catClass:'green', title:'Kürt dili dijital dünyada yükselen ivmeyle büyüyor', time:'4 sa önce', author:'Solin Agri', views:'5.5K', colorIdx:6 },
+  { cat:'Siyaset', catClass:'', title:'Irak Yüksek Mahkemesi, KBY sınırlarına ilişkin kararını açıkladı', time:'5 sa önce', author:'Heval Mahmud', views:'7.2K', colorIdx:1 },
+  { cat:'Dünya', catClass:'blue', title:'ABD Dışişleri Bakanlığı Erbil'deki konsolosluğunu genişletiyor', time:'6 sa önce', author:'Dış Politika Masası', views:'6.0K', colorIdx:2 },
+];
+
+const moreNewsItems = [
+  { cat:'Ekonomi', catClass:'', title:'Kürdistan'dan Avrupa'ya ihracat hacmi yüzde 18 arttı', time:'7 sa önce', author:'Bahar Tekin', views:'2.1K', colorIdx:3 },
+  { cat:'Kültür', catClass:'green', title:'Stockholm'de Kürt kültür merkezi açıldı, büyük ilgi gördü', time:'8 sa önce', author:'Solin Agri', views:'4.4K', colorIdx:4 },
+  { cat:'Spor', catClass:'green', title:'Duhok FK UEFA kulübüyle tarihi antrenman anlaşması imzaladı', time:'9 sa önce', author:'Spor Masası', views:'8.1K', colorIdx:5 },
+];
+
+let newsPage = 0;
+const placeColors = ['img-placeholder-1','img-placeholder-2','img-placeholder-3','img-placeholder-4','img-placeholder-5','img-placeholder-6'];
+const icons = ['fas fa-globe','fas fa-chart-bar','fas fa-futbol','fas fa-heartbeat','fas fa-microchip','fas fa-language','fas fa-landmark','fas fa-users'];
+
+function renderNewsItem(item) {
+  const col = placeColors[(item.colorIdx - 1) % placeColors.length];
+  const ico = icons[(item.colorIdx - 1) % icons.length];
+  return `
+    <div class="news-card" onclick="showToast('Haber açılıyor…')">
+      <div class="nc-thumb ${col}" style="display:flex;align-items:center;justify-content:center;">
+        <i class="${ico}" style="font-size:1.4rem;color:rgba(255,255,255,.25);"></i>
+      </div>
+      <div class="nc-body">
+        <h4>${item.title}</h4>
+        <div class="nc-meta">
+          <span class="hero-cat ${item.catClass}" style="font-size:.58rem;padding:1px 6px;">${item.cat}</span>
+          <span><i class="far fa-clock"></i> ${item.time}</span>
+          <span><i class="fas fa-user"></i> ${item.author}</span>
+          <span><i class="far fa-eye"></i> ${item.views}</span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function loadMoreNews() {
+  const list = document.getElementById('newsList');
+  if (newsPage === 0) {
+    newsItems.forEach(n => list.insertAdjacentHTML('beforeend', renderNewsItem(n)));
+  } else if (newsPage === 1) {
+    moreNewsItems.forEach(n => list.insertAdjacentHTML('beforeend', renderNewsItem(n)));
+    showToast('Tüm haberler yüklendi.');
+  } else {
+    showToast('Daha fazla haber yok.');
+    return;
+  }
+  newsPage++;
+}
+loadMoreNews();
+
+/* ── TRENDING ── */
+const trending = [
+  { title:'Erbil-Bağdat anlaşması: Yeni bir dönem mi?', time:'2 sa önce', cat:'Kürdistan' },
+  { title:'Kürt diasporası Avrupa seçimlerinde nasıl oy kullanacak?', time:'4 sa önce', cat:'Siyaset' },
+  { title:'PKK ateşkesi ve bölgesel dinamikler üzerine analiz', time:'6 sa önce', cat:'Analiz' },
+  { title:'Kürdistan'da yenilenebilir enerji yatırımları patlama yapıyor', time:'8 sa önce', cat:'Ekonomi' },
+  { title:'Cannes'da Kürt sineması: Tarihî bir an', time:'1 gün önce', cat:'Kültür' },
+];
+const trendDiv = document.getElementById('trendingList');
+trending.forEach((t, i) => {
+  trendDiv.insertAdjacentHTML('beforeend', `
+    <div class="trending-item" onclick="showToast('Haber açılıyor…')">
+      <div class="t-num">${i + 1}</div>
+      <div class="t-body">
+        <h4>${t.title}</h4>
+        <div class="t-meta"><span class="tag">${t.cat}</span> &nbsp; ${t.time}</div>
+      </div>
+    </div>
+  `);
+});
+
+/* ── TOAST ── */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+/* ── NEWSLETTER ── */
+function subscribeNewsletter() {
+  const email = document.getElementById('nlEmail').value.trim();
+  if (!email || !email.includes('@')) { showToast('Geçerli bir e-posta girin.'); return; }
+  document.getElementById('nlSuccess').style.display = 'block';
+  document.getElementById('nlEmail').style.display = 'none';
+  document.querySelector('.nl-form button').style.display = 'none';
+  showToast('Bülten aboneliğiniz tamamlandı!');
+}
+
+/* ── POLL ── */
+function submitPoll() {
+  const sel = document.querySelector('input[name=poll]:checked');
+  if (!sel) { showToast('Lütfen bir seçenek işaretleyin.'); return; }
+  showToast('Oyunuz kaydedildi, teşekkürler!');
+  document.querySelectorAll('input[name=poll]').forEach(r => r.disabled = true);
+  document.querySelector('.poll-btn').disabled = true;
+  document.querySelector('.poll-btn').style.opacity = '.5';
+}
+
+/* ── LANGUAGE SWITCHER ── */
+function switchLang(btn, code) {
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const msgs = { TR:'Türkçe yayın', KU:'Kurdî weşanê', EN:'English edition', AR:'النسخة العربية' };
+  showToast(msgs[code]);
+}
+
+/* ── SEARCH ── */
+function openSearch() {
+  document.getElementById('searchOverlay').classList.add('open');
+  document.getElementById('searchInput').focus();
+}
+document.getElementById('searchClose').onclick = () =>
+  document.getElementById('searchOverlay').classList.remove('open');
+document.getElementById('searchOverlay').onclick = e => {
+  if (e.target === document.getElementById('searchOverlay'))
+    document.getElementById('searchOverlay').classList.remove('open');
+};
+
+const allNews = [...newsItems, ...moreNewsItems];
+document.getElementById('searchInput').addEventListener('input', function() {
+  const q = this.value.toLowerCase().trim();
+  const res = document.getElementById('searchResults');
+  if (!q) {
+    res.innerHTML = '<div class="sr-empty"><i class="fas fa-search" style="font-size:1.8rem;opacity:.3;display:block;margin-bottom:.5rem;"></i>Aramak istediğiniz konuyu yazın.</div>';
+    return;
+  }
+  const found = allNews.filter(n => n.title.toLowerCase().includes(q));
+  if (!found.length) {
+    res.innerHTML = `<div class="sr-empty"><i class="fas fa-inbox" style="font-size:1.8rem;opacity:.3;display:block;margin-bottom:.5rem;"></i>"${q}" için sonuç bulunamadı.</div>`;
+    return;
+  }
+  res.innerHTML = found.map(n => `
+    <div class="sr-item" onclick="document.getElementById('searchOverlay').classList.remove('open');showToast('Haber açılıyor…')">
+      <div class="sr-thumb ${placeColors[(n.colorIdx-1)%6]}" style="display:flex;align-items:center;justify-content:center;">
+        <i class="fas fa-newspaper" style="font-size:1rem;color:rgba(255,255,255,.3);"></i>
+      </div>
+      <div>
+        <h4>${n.title}</h4>
+        <p><span class="tag">${n.cat}</span> &nbsp; ${n.time}</p>
+      </div>
+    </div>
+  `).join('');
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.getElementById('searchOverlay').classList.remove('open');
+});
+document.querySelector('.header-search input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') openSearch();
+});
+
+/* ── MOBILE NAV ── */
+document.getElementById('hamburger').onclick = () => {
+  document.getElementById('mobileNav').classList.add('open');
+  document.getElementById('navOverlay').classList.add('open');
+};
+document.getElementById('mnClose').onclick = closeMNav;
+document.getElementById('navOverlay').onclick = closeMNav;
+function closeMNav() {
+  document.getElementById('mobileNav').classList.remove('open');
+  document.getElementById('navOverlay').classList.remove('open');
+}
+
+/* ── BACK TO TOP ── */
+const backBtn = document.getElementById('backTop');
+window.addEventListener('scroll', () => {
+  backBtn.classList.toggle('show', window.scrollY > 400);
+});
+backBtn.onclick = () => window.scrollTo({ top:0, behavior:'smooth' });
+
+/* ── STICKY NAV ACTIVE LINK ── */
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', function() {
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+/* ── TICKER duplicate for seamless loop ── */
+const ticker = document.getElementById('tickerInner');
+ticker.innerHTML += ticker.innerHTML;
+</script>
+</body>
+</html>
